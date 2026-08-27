@@ -25,7 +25,7 @@ async function login() {
     localStorage.setItem("sipad_role", res.role);
     localStorage.setItem("sipad_name", res.name);
 
-    window.location.replace("/pages/index.html");
+    window.location.replace("/pages/dashboard.html");
 
   } catch (err) {
 
