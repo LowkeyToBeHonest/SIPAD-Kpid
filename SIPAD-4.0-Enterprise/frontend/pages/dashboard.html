@@ -1,1 +1,42 @@
-<!doctype html><html lang='id'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta http-equiv='refresh' content='0;url=index.html'><title>Dashboard | SIPAD</title><link href='index.html' rel='canonical'></head><body><p>Membuka dashboard...</p><script>location.replace('index.html');</script></body></html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | SIPAD</title>
+
+  <script>
+    // Cek token login
+    const token = localStorage.getItem("sipad_token");
+
+    if (!token) {
+      window.location.replace("/pages/login.html");
+    }
+  </script>
+
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+  <header style="padding:16px;background:#0d6efd;color:white;">
+    <h2>SIPAD 4.0 Enterprise</h2>
+  </header>
+
+  <main style="padding:24px;">
+    <h3>Selamat Datang</h3>
+    <p id="userRole"></p>
+
+    <button onclick="logout()">Keluar</button>
+  </main>
+
+  <script>
+    document.getElementById("userRole").textContent =
+      "Role : " + (localStorage.getItem("sipad_role") || "-");
+
+    function logout() {
+      localStorage.clear();
+      window.location.replace("/pages/login.html");
+    }
+  </script>
+</body>
+</html>
