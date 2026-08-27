@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "rewrites": [
+    { "source": "/", "destination": "/frontend/pages/login.html" }
     { "source": "/login", "destination": "/frontend/pages/login.html" },
     { "source": "/dashboard", "destination": "/frontend/pages/index.html" },
     { "source": "/:page(index|login|arsip|upload|laporan|audit|users|settings).html", "destination": "/frontend/pages/:page.html" },
