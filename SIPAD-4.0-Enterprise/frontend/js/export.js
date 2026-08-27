@@ -2,6 +2,7 @@ let DATA=[];
 const reportSearch=document.getElementById('reportSearch');
 const reportCategory=document.getElementById('reportCategory');
 const reportBody=document.getElementById('tb');
+if(reportCategory)reportCategory.innerHTML='<option value="">Semua kategori</option><option>Surat Masuk</option><option>Surat Keluar</option><option>Laporan</option><option>Dokumentasi</option>';
 
 function renderReport(){
   const query=(reportSearch.value||'').toLowerCase();
@@ -14,7 +15,7 @@ function renderReport(){
 }
 
 async function load(){
-  try{DATA=await api.list();document.getElementById('reportTotal').textContent=DATA.length;document.getElementById('reportLetters').textContent=DATA.filter(item=>item.kategori==='Surat').length;document.getElementById('reportOther').textContent=DATA.filter(item=>item.kategori!=='Surat').length;renderReport();}
+  try{DATA=await api.list();document.getElementById('reportTotal').textContent=DATA.length;document.getElementById('reportLetters').textContent=DATA.filter(item=>item.kategori==='Surat Masuk'||item.kategori==='Surat Keluar'||item.kategori==='Surat').length;document.getElementById('reportOther').textContent=DATA.filter(item=>item.kategori!=='Surat Masuk'&&item.kategori!=='Surat Keluar'&&item.kategori!=='Surat').length;renderReport();}
   catch(error){reportBody.innerHTML='<tr><td colspan="4" class="empty-state">Gagal memuat laporan. Periksa koneksi Web App.</td></tr>';notify('Gagal memuat laporan',error.message,'error');}
 }
 
