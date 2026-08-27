@@ -1,18 +1,31 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SIPAD</title>
-<script>
-const token = localStorage.getItem("sipad_token");
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIPAD 4.0 Enterprise</title>
 
-if (token) {
-  window.location.replace("/pages/index.html");
-} else {
-  window.location.replace("/pages/login.html");
-}
-</script>
+  <script>
+    const token = localStorage.getItem("sipad_token");
+
+    if (token) {
+      window.location.replace("/pages/index.html");
+    } else {
+      window.location.replace("/pages/login.html");
+    }
+  </script>
 </head>
-<body></body>
+<body style="margin:0;font-family:Arial,sans-serif;background:#f5f7fb;display:flex;justify-content:center;align-items:center;height:100vh;">
+  <div style="text-align:center">
+    <div style="width:42px;height:42px;border:4px solid #ddd;border-top-color:#2563eb;border-radius:50%;animation:spin 1s linear infinite;margin:auto"></div>
+    <p>Mengarahkan...</p>
+  </div>
+
+  <style>
+    @keyframes spin{
+      from{transform:rotate(0)}
+      to{transform:rotate(360deg)}
+    }
+  </style>
+</body>
 </html>
