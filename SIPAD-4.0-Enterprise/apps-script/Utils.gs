@@ -1,0 +1,1 @@
+function nextNumber(){const sh=sheet();const last=sh.getLastRow();return 'KPID/'+Utilities.formatString('%04d',last)}

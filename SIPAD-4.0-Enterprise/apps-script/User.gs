@@ -1,0 +1,1 @@
+function getUsers(){return USERS.map(u=>({email:u.email,role:u.role}));}

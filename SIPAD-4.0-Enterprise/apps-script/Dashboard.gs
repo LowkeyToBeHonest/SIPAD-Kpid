@@ -1,0 +1,1 @@
+function statistik(){const v=sheet().getDataRange().getValues();const r={};for(let i=1;i<v.length;i++){const k=v[i][3];r[k]=(r[k]||0)+1;}return r;}

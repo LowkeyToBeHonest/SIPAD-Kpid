@@ -1,0 +1,1 @@
+function restoreArsip(id){const sh=sheet(),v=sh.getDataRange().getValues();for(let i=1;i<v.length;i++)if(v[i][0]==id){sh.getRange(i+1,8).setValue('AKTIF');logActivity('SYSTEM','RESTORE',v[i][1]);return {success:true};}return {success:false,error:'Arsip tidak ditemukan'};}

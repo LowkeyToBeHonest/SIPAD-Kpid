@@ -1,0 +1,1 @@
+function backupDatabase(){const file=DriveApp.getFileById(SHEET_ID);const folder=DriveApp.getFolderById(FOLDER_ID);file.makeCopy('Backup_'+Utilities.formatDate(new Date(),Session.getScriptTimeZone(),'yyyyMMdd_HHmm'),folder);return {success:true}}

@@ -1,0 +1,8 @@
+function exportCSV(){const sh=sheet(),rows=sh.getDataRange().getDisplayValues(),headers=['No.','Nomor Arsip','Judul Dokumen','Kategori','Tanggal','Link Dokumen','Status'],data=[headers];rows.slice(1).forEach(row=>{if(row[0]!==''&&row[7]!=='TRASH')data.push([data.length,row[1],row[2],row[3],row[4],row[6],row[7]||'AKTIF']);});const csv=data.map(r=>r.map(csvValue).join(',')).join('\r\n');return ContentService.createTextOutput('\ufeff'+csv).setMimeType(ContentService.MimeType.CSV)}
+function csvValue(value){const text=String(value==null?'':value);return /[",\n\r]/.test(text)?'"'+text.replace(/"/g,'""')+'"':text;}
+function exportPDF(){const report=buildReportSheet(),url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/export?format=pdf&gid='+report.getSheetId()+'&portrait=false&fitw=true&sheetnames=false&printtitle=false&pagenumbers=true&gridlines=false&fzr=false';return {url:url};}
+function buildReportSheet(){
+	const ss=SpreadsheetApp.openById(SHEET_ID),source=sheet(),name='LAPORAN_EXPORT';let report=ss.getSheetByName(name);if(!report)report=ss.insertSheet(name);report.clear();
+	const rows=source.getDataRange().getDisplayValues(),headers=['No.','Nomor Arsip','Judul Dokumen','Kategori','Tanggal','Status'],data=[headers];rows.slice(1).forEach(row=>{if(row[0]!==''&&row[7]!=='TRASH')data.push([data.length,row[1],row[2],row[3],row[4],row[7]||'AKTIF']);});
+	if(data.length)report.getRange(1,1,data.length,headers.length).setValues(data);report.setFrozenRows(1);report.getRange(1,1,1,headers.length).setBackground('#1d4ed8').setFontColor('#ffffff').setFontWeight('bold');if(data.length>1)report.getRange(2,1,data.length-1,headers.length).setVerticalAlignment('middle');report.autoResizeColumns(1,headers.length);return report;
+}
