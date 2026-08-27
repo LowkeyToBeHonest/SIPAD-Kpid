@@ -1,13 +1,37 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/frontend/pages/login.html" }
-    { "source": "/login", "destination": "/frontend/pages/login.html" },
-    { "source": "/dashboard", "destination": "/frontend/pages/index.html" },
-    { "source": "/:page(index|login|arsip|upload|laporan|audit|users|settings).html", "destination": "/frontend/pages/:page.html" },
-    { "source": "/js/:path*", "destination": "/frontend/js/:path*" },
-    { "source": "/css/:path*", "destination": "/frontend/css/:path*" },
-    { "source": "/assets/:path*", "destination": "/frontend/assets/:path*" },
-    { "source": "/vendor/:path*", "destination": "/frontend/vendor/:path*" }
+    {
+      "source": "/",
+      "destination": "/frontend/pages/login.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/frontend/pages/login.html"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/frontend/pages/index.html"
+    },
+    {
+      "source": "/:page(index|login|arsip|upload|laporan|audit|users|settings).html",
+      "destination": "/frontend/pages/:page.html"
+    },
+    {
+      "source": "/js/:path*",
+      "destination": "/frontend/js/:path*"
+    },
+    {
+      "source": "/css/:path*",
+      "destination": "/frontend/css/:path*"
+    },
+    {
+      "source": "/assets/:path*",
+      "destination": "/frontend/assets/:path*"
+    },
+    {
+      "source": "/vendor/:path*",
+      "destination": "/frontend/vendor/:path*"
+    }
   ]
 }
