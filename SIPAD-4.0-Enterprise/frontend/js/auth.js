@@ -15,21 +15,17 @@ async function login() {
   }
 
   setLoading(true, "Memeriksa akun...");
-
   if (button) button.disabled = true;
 
   try {
+
     const res = await api.login(email, password);
 
     localStorage.setItem("sipad_token", res.token);
     localStorage.setItem("sipad_role", res.role);
     localStorage.setItem("sipad_name", res.name);
 
-    notify("Berhasil", "Login berhasil", "success");
-
-    setTimeout(() => {
-      window.location.replace("/pages/dashboard.html");
-    }, 300);
+    window.location.replace("/pages/index.html");
 
   } catch (err) {
 
@@ -46,17 +42,17 @@ async function login() {
   }
 }
 
-function role() {
+function role(){
   return localStorage.getItem("sipad_role") || "GUEST";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
-  const password = document.getElementById("password");
+  const pass = document.getElementById("password");
 
-  if (password) {
-    password.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") login();
+  if(pass){
+    pass.addEventListener("keydown",(e)=>{
+      if(e.key==="Enter") login();
     });
   }
 
