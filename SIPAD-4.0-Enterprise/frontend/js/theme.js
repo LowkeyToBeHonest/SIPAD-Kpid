@@ -8,7 +8,7 @@ function profilePhoto(){return localStorage.getItem('sipad_profile_photo')||'';}
 function mountProfile(){const existing=document.getElementById('globalProfile');if(existing)existing.remove();const avatar=document.createElement('button');avatar.id='globalProfile';avatar.className='global-profile';avatar.type='button';avatar.title='Foto profil';const photo=profilePhoto();if(photo){const image=document.createElement('img');image.src=photo;image.alt='Foto profil';avatar.appendChild(image);}else avatar.textContent=(localStorage.getItem('sipad_role')||'G').charAt(0);document.body.appendChild(avatar);}
 
 document.addEventListener('DOMContentLoaded',()=>{
-  if(!/login\.html$/i.test(location.pathname)&&!localStorage.getItem('sipad_token')){location.replace('login.html');return;}
+  if(!/^(\/|\/login|\/login\.html|.*\/login\.html)$/i.test(location.pathname)&&!localStorage.getItem('sipad_token')){location.replace('login.html');return;}
   mountProfile();
   const input=document.getElementById('profilePhoto'),saved=profilePhoto(),preview=document.getElementById('profilePreview');
   if(saved&&preview){preview.src=saved;preview.classList.add('visible');}
