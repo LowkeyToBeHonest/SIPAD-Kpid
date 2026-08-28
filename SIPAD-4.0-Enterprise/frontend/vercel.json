@@ -1,3 +1,19 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/frontend/pages/login.html" },
+
+    { "source": "/pages/login", "destination": "/frontend/pages/login.html" },
+    { "source": "/pages/dashboard", "destination": "/frontend/pages/dashboard.html" },
+    { "source": "/pages/arsip", "destination": "/frontend/pages/arsip.html" },
+    { "source": "/pages/upload", "destination": "/frontend/pages/upload.html" },
+    { "source": "/pages/laporan", "destination": "/frontend/pages/laporan.html" },
+    { "source": "/pages/audit", "destination": "/frontend/pages/audit.html" },
+    { "source": "/pages/users", "destination": "/frontend/pages/users.html" },
+    { "source": "/pages/settings", "destination": "/frontend/pages/settings.html" },
+
+    { "source": "/css/:path*", "destination": "/frontend/css/:path*" },
+    { "source": "/js/:path*", "destination": "/frontend/js/:path*" },
+    { "source": "/assets/:path*", "destination": "/frontend/assets/:path*" }
+  ]
 }
