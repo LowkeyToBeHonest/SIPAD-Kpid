@@ -453,303 +453,88 @@ body{
 
 }
 
-/* =========================================================
-   SIPAD ENTERPRISE 4.0 - SHARED LAYOUT
-   Tambahkan di PALING BAWAH style.css
-========================================================= */
+/* ===== FIX DASHBOARD ===== */
 
-/* Layout */
 .dashboard-shell{
-    display:flex;
-    min-height:100vh;
-    background:linear-gradient(135deg,#eef4ff 0%,#f8fafc 55%,#e6f2ff 100%);
+  display:flex;
+  min-height:100vh;
 }
 
 .dashboard-sidebar{
-    width:250px;
-    flex:0 0 250px;
-    background:linear-gradient(180deg,#081633,#1d4ed8);
-    color:#fff;
-    padding:22px 18px;
-    position:sticky;
-    top:0;
-    min-height:100vh;
+  width:250px;
+  flex:0 0 250px;
 }
 
 .dashboard-content{
-    flex:1;
-    padding:32px 38px;
-    min-width:0;
+  flex:1;
+  padding:28px;
 }
 
-/* Brand */
-.brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:30px;
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:24px;
 }
 
-.brand-mark{
-    width:52px;
-    height:52px;
-    border-radius:16px;
-    overflow:hidden;
-    background:#fff;
-    display:grid;
-    place-items:center;
-    box-shadow:0 6px 16px rgba(0,0,0,.18);
+.stat-card{
+  padding:22px;
+  border-radius:20px;
+  min-height:160px;
+  position:relative;
+  overflow:hidden;
 }
 
-.brand-mark img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
+.stat-card::after{
+  content:"";
+  position:absolute;
+  right:-28px;
+  top:-28px;
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  background:rgba(37,99,235,.12);
 }
 
-.brand-copy strong{
-    display:block;
-    font-size:18px;
-    font-weight:700;
+.stat-icon{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#dbeafe;
+  color:#2563eb;
+  font-size:20px;
+  margin-bottom:14px;
 }
 
-.brand-copy small{
-    color:#c7d2fe;
+.stat-title{
+  color:var(--muted);
+  font-size:15px;
 }
 
-/* Sidebar */
-.sidebar-label{
-    color:#bfdbfe;
-    font-size:11px;
-    font-weight:800;
-    letter-spacing:2px;
-    margin:22px 12px 10px;
-    text-transform:uppercase;
+.stat-value{
+  font-size:42px;
+  font-weight:800;
 }
 
-.dashboard-sidebar .nav-link{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    color:#dbeafe;
-    text-decoration:none;
-    padding:12px 16px;
-    border-radius:14px;
-    margin-bottom:6px;
-    transition:.25s;
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:1.5fr .8fr;
+  gap:18px;
 }
 
-.dashboard-sidebar .nav-link:hover,
-.dashboard-sidebar .nav-link.active{
-    background:rgba(255,255,255,.15);
-    color:#fff;
-}
-
-.logout-link{
-    margin-top:18px;
-}
-
-/* User */
-.user-chip{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-top:30px;
-    padding:10px 12px;
-    border-radius:14px;
-    background:rgba(255,255,255,.1);
-}
-
-.user-avatar{
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:#dbeafe;
-    color:#1d4ed8;
-    display:grid;
-    place-items:center;
-    font-weight:800;
-}
-
-.user-copy small{
-    color:#bfdbfe;
-}
-
-/* Header */
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    margin-bottom:28px;
-    gap:20px;
-}
-
-.eyebrow{
-    color:#c9151e;
-    font-size:12px;
-    font-weight:800;
-    letter-spacing:2px;
-    text-transform:uppercase;
-}
-
-.welcome-title{
-    font-size:56px;
-    font-weight:800;
-    margin:6px 0;
-    line-height:1;
-}
-
-.status-pill{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:8px 14px;
-    border-radius:999px;
-    background:#dcfce7;
-    color:#166534;
-    font-weight:700;
-}
-
-.status-dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#22c55e;
-}
-
-/* Panel */
 .panel{
-    padding:26px;
-    border-radius:22px;
+  padding:22px;
 }
 
-.panel-heading{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:22px;
+@media(max-width:900px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .dashboard-grid{grid-template-columns:1fr}
 }
 
-.panel-heading h2{
-    margin:0;
-    font-size:22px;
-    font-weight:800;
-}
-
-/* Upload */
-.drop-zone{
-    border:2px dashed #93c5fd;
-    border-radius:18px;
-    background:#f8fbff;
-    min-height:180px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    transition:.25s;
-    padding:24px;
-}
-
-.drop-zone:hover{
-    border-color:#2563eb;
-    background:#eff6ff;
-}
-
-.drop-icon{
-    width:52px;
-    height:52px;
-    border-radius:16px;
-    display:grid;
-    place-items:center;
-    background:#dbeafe;
-    color:#2563eb;
-    font-size:26px;
-    margin-bottom:12px;
-}
-
-.file-name{
-    margin-top:8px;
-    font-weight:700;
-    color:#2563eb;
-}
-
-/* Preview */
-.logo-preview{
-    width:90px;
-    height:90px;
-    border-radius:14px;
-    border:1px solid var(--border);
-    object-fit:contain;
-    display:none;
-    background:#fff;
-    padding:8px;
-}
-
-.logo-preview.visible{
-    display:block;
-}
-
-.profile-preview{
-    width:68px;
-    height:68px;
-    border-radius:50%;
-    object-fit:cover;
-    border:2px solid var(--border);
-}
-
-/* Responsive */
-@media (max-width:900px){
-
-    .dashboard-sidebar{
-        width:82px;
-        flex-basis:82px;
-        padding:18px 10px;
-    }
-
-    .brand-copy,
-    .sidebar-label,
-    .dashboard-sidebar .nav-link span:last-child,
-    .user-copy{
-        display:none;
-    }
-
-    .dashboard-sidebar .nav-link{
-        justify-content:center;
-    }
-
-    .dashboard-content{
-        padding:22px;
-    }
-
-    .welcome-title{
-        font-size:40px;
-    }
-
-}
-
-@media (max-width:640px){
-
-    .dashboard-shell{
-        display:block;
-    }
-
-    .dashboard-sidebar{
-        width:100%;
-        min-height:auto;
-        position:static;
-    }
-
-    .dashboard-content{
-        padding:18px;
-    }
-
-    .topbar{
-        flex-direction:column;
-    }
-
-    .welcome-title{
-        font-size:34px;
-    }
-
+@media(max-width:600px){
+  .dashboard-shell{display:block}
+  .dashboard-sidebar{width:100%}
+  .stats-grid{grid-template-columns:1fr}
 }
