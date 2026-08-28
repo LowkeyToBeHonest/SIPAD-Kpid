@@ -121,12 +121,7 @@ body{
 }
 
 /* Glass Card */
-
 .glass{
-.logo-preview{display:none;width:88px;height:88px;object-fit:contain;border:1px solid var(--border);border-radius:14px;background:#fff;padding:8px}.logo-preview.visible{display:block}.institution-logo{width:100%;height:100%;object-fit:contain;border-radius:12px}.brand-mark{overflow:hidden;padding:4px}.brand-mark img{width:100%;height:100%;object-fit:contain;border-radius:10px}
-.global-profile{position:fixed;top:20px;right:24px;z-index:1000;width:46px;height:46px;padding:0;border:3px solid #fff;border-radius:50%;background:#c9151e;color:#fff;display:grid;place-items:center;font-weight:800;box-shadow:0 6px 18px rgba(17,17,17,.22);overflow:hidden}.global-profile img{width:100%;height:100%;object-fit:cover}
-.profile-preview{width:64px;height:64px;flex:0 0 64px;display:block;object-fit:cover;border:1px solid var(--border);border-radius:50%;background:#f1f5f9}.profile-preview:not(.visible){visibility:hidden}
-@media(max-width:560px){.global-profile{top:64px;right:14px;width:42px;height:42px}.profile-preview{width:54px;height:54px;flex-basis:54px}.settings-grid .d-flex{flex-wrap:wrap}.settings-grid .d-flex .form-control{width:100%;flex-basis:100%}}
   background:var(--surface);
   backdrop-filter:blur(16px);
   border:1px solid var(--border);
@@ -134,14 +129,58 @@ body{
   box-shadow:var(--shadow);
 }
 
-.card{
-  border:none!important;
-  border-radius:var(--radius)!important;
-  background:var(--surface)!important;
-  backdrop-filter:blur(14px);
-  box-shadow:var(--shadow);
+/* Logo */
+.logo-preview{
+  display:none;
+  width:88px;
+  height:88px;
+  object-fit:contain;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#fff;
+  padding:8px;
 }
 
+.logo-preview.visible{
+  display:block;
+}
+
+.institution-logo{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:12px;
+}
+
+.brand-mark{
+  overflow:hidden;
+  padding:4px;
+}
+
+.brand-mark img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:10px;
+}
+
+/* Avatar Profil */
+.global-profile{
+  display:none !important;
+}
+
+.profile-preview{
+  width:64px;
+  height:64px;
+  object-fit:cover;
+  border-radius:50%;
+  border:1px solid var(--border);
+  background:#f1f5f9;
+}
+
+.profile-preview:not(.visible){
+  visibility:hidden;
+}
 /* Statistic */
 
 .stat-card{
