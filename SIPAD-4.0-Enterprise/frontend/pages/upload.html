@@ -9,32 +9,219 @@
 <link rel="icon" type="image/jpeg" href="../assets/icons/kpid-logo.jpeg">
 </head>
 <body>
-<div class="app-shell">
-<aside class="app-sidebar"><div>
-<div class="brand d-flex align-items-center gap-2"><div class="brand-mark">S</div><div class="brand-copy"><strong>SIPAD</strong><small class="d-block">Enterprise 4.0</small></div></div>
-<div class="sidebar-label">Workspace</div>
-<nav>
-<a class="nav-link" href="/pages/dashboard.html"><span>⌂</span><span>Dashboard</span></a>
-<a class="nav-link" href="arsip.html"><span>▣</span><span>Data Arsip</span></a>
-<a class="nav-link active" href="upload.html"><span>＋</span><span>Upload Arsip</span></a>
-<a class="nav-link" href="laporan.html"><span>▤</span><span>Laporan</span></a>
-<a class="nav-link" href="audit.html"><span>◷</span><span>Audit Aktivitas</span></a>
-<a class="nav-link" href="users.html"><span>♙</span><span>Pengguna</span></a>
-<a class="nav-link" href="settings.html"><span>⚙</span><span>Pengaturan</span></a>
-</nav></div></aside>
-<main class="app-content">
-<header class="page-header"><div><div class="page-kicker">Pusat dokumen</div><h1>Upload arsip</h1><p>Simpan dokumen baru dengan metadata yang terstruktur.</p></div></header>
-<section class="upload-hero">
-<div class="glass content-panel"><h2 class="panel-title mb-4">Detail dokumen</h2>
-<div class="row g-3">
-<div class="col-md-6"><label class="form-label">Nomor arsip</label><input id="nomor" class="form-control" placeholder="Membuat nomor otomatis..." aria-describedby="nomorHelp" readonly><small id="nomorHelp" class="text-muted d-block mt-2">Nomor dibuat otomatis oleh sistem.</small></div>
-<div class="col-md-6"><label class="form-label">Tanggal dokumen</label><input id="tgl" type="date" class="form-control"></div>
-<div class="col-12"><label class="form-label">Judul dokumen</label><input id="judul" class="form-control" placeholder="Masukkan judul dokumen"></div>
-<div class="col-12"><label class="form-label">Kategori</label><select id="kat" class="form-select"><option>Surat Masuk</option><option>Surat Keluar</option><option>Laporan</option><option>Dokumentasi</option></select></div>
-<div class="col-12"><label class="form-label">File dokumen atau video</label><div id="dropZone" class="drop-zone" tabindex="0" role="button"><div class="drop-icon">↑</div><strong>Tarik file ke sini</strong><span class="d-block text-muted mt-1">atau klik untuk memilih file</span><small class="d-block text-muted mt-2">PDF, DOC, DOCX, JPG, PNG, MP4, WebM, MOV, AVI. Maksimal 100 MB.</small><div id="fileName" class="file-name mt-3"></div><input id="file" type="file" hidden accept=".pdf,.doc,.docx,.jpg,.png,.mp4,.webm,.mov,.avi,video/*"></div></div>
-</div><button id="uploadButton" class="btn btn-primary mt-4" onclick="upload()">Simpan arsip</button>
+
+<div class="dashboard-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="dashboard-sidebar">
+
+    <div class="brand">
+      <div class="brand-mark">
+        <img src="../assets/icons/kpid-logo.jpeg" alt="KPID">
+      </div>
+
+      <div class="brand-copy">
+        <strong>SIPAD</strong>
+        <small>Enterprise 4.0</small>
+      </div>
+    </div>
+
+    <div class="sidebar-label">WORKSPACE</div>
+
+    <nav>
+      <a class="nav-link" href="/pages/dashboard">⌂ <span>Dashboard</span></a>
+      <a class="nav-link" href="/pages/arsip">▣ <span>Data Arsip</span></a>
+      <a class="nav-link active" href="/pages/upload">＋ <span>Upload Arsip</span></a>
+      <a class="nav-link" href="/pages/laporan">▤ <span>Laporan</span></a>
+      <a class="nav-link" href="/pages/audit">◷ <span>Audit Aktivitas</span></a>
+      <a class="nav-link" href="/pages/users">👤 <span>Pengguna</span></a>
+      <a class="nav-link" href="/pages/settings">⚙ <span>Pengaturan</span></a>
+    </nav>
+
+    <a id="logout" class="nav-link logout-link" href="#">
+      ↪ <span>Keluar</span>
+    </a>
+
+    <div class="user-chip">
+      <div class="user-avatar" id="userAvatar">A</div>
+
+      <div class="user-copy">
+        <strong id="userRole">ADMIN</strong>
+        <small>Akses aktif</small>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="dashboard-content">
+
+    <header class="topbar">
+
+      <div>
+        <div class="eyebrow">PUSAT DOKUMEN</div>
+        <h1 class="welcome-title">Upload Arsip</h1>
+        <p class="subtitle">
+          Simpan dokumen baru dengan metadata yang terstruktur.
+        </p>
+      </div>
+
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        Siap Upload
+      </div>
+
+    </header>
+
+    <!-- FORM -->
+    <section class="glass panel">
+
+      <div class="panel-heading">
+        <h2>Detail Dokumen</h2>
+      </div>
+
+      <form id="uploadForm">
+
+        <div class="row g-3">
+
+          <div class="col-md-6">
+            <label class="form-label">Nomor Arsip</label>
+
+            <input id="nomor"
+                   class="form-control"
+                   readonly>
+
+            <small class="text-muted">
+              Dibuat otomatis oleh sistem
+            </small>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Tanggal Dokumen</label>
+
+            <input id="tanggal"
+                   type="date"
+                   class="form-control"
+                   required>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Judul Dokumen</label>
+
+            <input id="judul"
+                   class="form-control"
+                   placeholder="Masukkan judul dokumen"
+                   required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Kategori</label>
+
+            <select id="kategori" class="form-select">
+              <option>Surat Masuk</option>
+              <option>Surat Keluar</option>
+              <option>Laporan</option>
+              <option>Dokumentasi</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Bidang</label>
+
+            <input id="bidang"
+                   class="form-control"
+                   placeholder="Contoh: Sekretariat">
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Deskripsi</label>
+
+            <textarea id="deskripsi"
+                      rows="3"
+                      class="form-control"
+                      placeholder="Keterangan dokumen..."></textarea>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">File Dokumen / Video</label>
+
+            <label class="drop-zone" id="dropZone">
+
+              <input id="file"
+                     type="file"
+                     hidden
+                     accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.mp4">
+
+              <div class="drop-icon">⬆</div>
+
+              <strong>Seret file ke sini</strong>
+
+              <p class="text-muted mb-2">
+                atau klik untuk memilih file
+              </p>
+
+              <span class="file-name" id="fileName">
+                Belum ada file
+              </span>
+
+            </label>
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+
+          <button class="btn btn-primary" type="submit">
+            Simpan Arsip
+          </button>
+
+          <button class="btn btn-outline-secondary"
+                  type="reset">
+            Reset
+          </button>
+
+        </div>
+
+      </form>
+
+    </section>
+
+  </main>
+
 </div>
-<aside class="upload-note"><h2>Arsip lebih tertata.</h2><p>Metadata yang lengkap membuat dokumen lebih mudah dicari dan diaudit.</p><ul class="ps-3"><li>Nomor arsip dibuat otomatis</li><li>Pilih kategori sesuai isi dokumen</li><li>Pastikan file yang diunggah sudah final</li></ul></aside>
-</section></main></div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script><script src="../js/config.js"></script><script src="../js/api.js"></script><script src="../js/upload.js"></script>
-</body></html>
+
+<script src="../js/config.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/upload.js"></script>
+
+<script>
+const role = localStorage.getItem("sipad_role") || "ADMIN";
+
+userRole.textContent = role;
+userAvatar.textContent = role.charAt(0);
+
+logout.onclick = async e=>{
+  e.preventDefault();
+  try{ await api.logout(); }catch{}
+  localStorage.clear();
+  location.replace("/pages/login");
+};
+
+api.nextNumber().then(r=>{
+  nomor.value = r.number;
+});
+
+const dz = document.getElementById("dropZone");
+const fileInput = document.getElementById("file");
+const fileName = document.getElementById("fileName");
+
+dz.onclick = ()=>fileInput.click();
+
+fileInput.onchange = ()=>{
+  if(fileInput.files.length){
+    fileName.textContent = fileInput.files[0].name;
+  }
+};
+</script>
+
+</body>
