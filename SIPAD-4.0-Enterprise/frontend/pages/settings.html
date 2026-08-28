@@ -1,55 +1,109 @@
 <body>
 
-<div class="dashboard-shell">
+<div class="app-shell">
 
   <!-- SIDEBAR -->
-  <aside class="dashboard-sidebar">
+  <aside class="app-sidebar">
 
-    <div class="brand">
-      <div class="brand-mark">
-        <img src="../assets/icons/kpid-logo.jpeg">
+    <div>
+
+      <div class="brand">
+        <div class="brand-mark">
+          <img src="../assets/icons/kpid-logo.jpeg" alt="Logo KPID">
+        </div>
+
+        <div class="brand-copy">
+          <strong>SIPAD</strong>
+          <small>Enterprise 4.0</small>
+        </div>
       </div>
 
-      <div class="brand-copy">
-        <strong>SIPAD</strong>
-        <small>Enterprise 4.0</small>
-      </div>
+      <div class="sidebar-label">WORKSPACE</div>
+
+      <nav>
+        <a class="nav-link" href="dashboard.html">
+          <span>⌂</span><span>Dashboard</span>
+        </a>
+
+        <a class="nav-link" href="arsip.html">
+          <span>▣</span><span>Data Arsip</span>
+        </a>
+
+        <a class="nav-link" href="upload.html">
+          <span>＋</span><span>Upload Arsip</span>
+        </a>
+
+        <a class="nav-link" href="laporan.html">
+          <span>▤</span><span>Laporan</span>
+        </a>
+
+        <a class="nav-link" href="audit.html">
+          <span>◷</span><span>Audit Aktivitas</span>
+        </a>
+
+        <a class="nav-link" href="users.html">
+          <span>♙</span><span>Pengguna</span>
+        </a>
+
+        <a class="nav-link active" href="settings.html">
+          <span>⚙</span><span>Pengaturan</span>
+        </a>
+      </nav>
+
     </div>
 
-    <div class="sidebar-label">WORKSPACE</div>
+    <div>
 
-    <nav>
-      <a class="nav-link" href="/pages/dashboard">Dashboard</a>
-      <a class="nav-link" href="/pages/arsip">Data Arsip</a>
-      <a class="nav-link" href="/pages/upload">Upload Arsip</a>
-      <a class="nav-link" href="/pages/laporan">Laporan</a>
-      <a class="nav-link" href="/pages/audit">Audit</a>
-      <a class="nav-link" href="/pages/users">Pengguna</a>
-      <a class="nav-link active" href="/pages/settings">Pengaturan</a>
-    </nav>
+      <div class="user-chip">
+        <div class="user-avatar" id="userAvatar">A</div>
 
-    <a id="logout" class="nav-link logout-link" href="#">
-      Keluar
-    </a>
-
-    <div class="user-chip mt-4">
-      <div class="user-avatar" id="userAvatar">A</div>
-
-      <div class="user-copy">
-        <strong id="userRole">ADMIN</strong>
-        <small>Akses aktif</small>
+        <div class="user-copy">
+          <strong id="userRole">ADMIN</strong>
+          <small>Akses aktif</small>
+        </div>
       </div>
+
+      <a id="logout" class="nav-link logout-link" href="#">
+        <span>↪</span><span>Keluar</span>
+      </a>
+
     </div>
 
   </aside>
 
   <!-- CONTENT -->
-  <main class="dashboard-content">
+  <main class="app-content">
 
-    <!-- isi pengaturan tetap -->
+    <header class="page-header">
+      <div>
+        <div class="page-kicker">PREFERENSI SISTEM</div>
+        <h1>Pengaturan</h1>
+        <p class="subtitle">
+          Kelola identitas instansi, logo, tema, dan foto profil SIPAD.
+        </p>
+      </div>
+    </header>
+
+    <!-- ISI SETTINGS TETAP DI SINI -->
+    <section class="glass content-panel">
+      <!-- Form pengaturan milikmu -->
+    </section>
 
   </main>
 
 </div>
+
+<script>
+const role = localStorage.getItem("sipad_role") || "ADMIN";
+document.getElementById("userRole").textContent = role;
+document.getElementById("userAvatar").textContent = role.charAt(0);
+
+document.getElementById("logout").onclick = async (e)=>{
+  e.preventDefault();
+  try{ await api.logout(); }catch(err){}
+  localStorage.clear();
+  location.replace("login.html");
+};
+</script>
 
 </body>
