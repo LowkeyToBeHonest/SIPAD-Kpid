@@ -240,23 +240,34 @@ body{
   margin-bottom:0;
 }
 
+.table thead{
+    background:#F8FAFC;
+}
+
 .table thead th{
-  color:var(--muted);
-  font-size:13px;
-  border-bottom:1px solid var(--border);
+    padding:16px 20px;
+    border:none;
+    color:#64748B;
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.5px;
 }
 
 .table tbody td{
-  vertical-align:middle;
-  border-color:var(--border);
+    padding:18px 20px;
+    border-top:1px solid #EEF2F7;
+    vertical-align:middle;
+    font-size:15px;
+    color:#1F2937;
 }
 
 .table tbody tr{
-  transition:var(--transition);
+    transition:.2s ease;
 }
 
 .table tbody tr:hover{
-  background:rgba(37,99,235,.04);
+    background:#F8FBFF;
 }
 
 /* Buttons */
@@ -718,7 +729,11 @@ body{
 }
 
 .table-wrap{
-    overflow:auto;
+    background:#fff;
+    border:1px solid #E5E7EB;
+    border-radius:18px;
+    overflow:hidden;
+    margin-top:16px;
 }
 
 /* ---------- Quick Link ---------- */
@@ -745,7 +760,15 @@ body{
     border-color:#2563EB;
     transform:translateY(-2px);
 }
-
+.category-badge{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:999px;
+    background:#DBEAFE;
+    color:#2563EB;
+    font-size:12px;
+    font-weight:700;
+}
 .quick-icon{
     width:46px;
     height:46px;
