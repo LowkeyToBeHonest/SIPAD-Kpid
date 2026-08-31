@@ -20,7 +20,6 @@
 
 <body>
 
-<!-- Mobile Menu -->
 <button id="menuToggle" class="mobile-menu-btn">☰</button>
 <div id="sidebarOverlay" class="sidebar-overlay"></div>
 
@@ -60,7 +59,6 @@
 
       <div class="user-chip">
         <div class="user-avatar" id="userAvatar">A</div>
-
         <div class="user-copy">
           <strong id="userRole">ADMIN</strong>
           <small>Akses aktif</small>
@@ -78,7 +76,6 @@
   <!-- CONTENT -->
   <main class="app-content">
 
-    <!-- Header -->
     <header class="page-header">
 
       <div>
@@ -93,7 +90,6 @@
 
     </header>
 
-    <!-- Panel -->
     <section class="glass panel">
 
       <div class="panel-heading mb-4">
@@ -105,86 +101,112 @@
         </div>
       </div>
 
-      <div class="row g-4">
+      <!-- FORM -->
+      <form id="settingForm">
 
-        <!-- Nama Instansi -->
-        <div class="col-md-6">
-          <label class="form-label fw-semibold">Nama Instansi</label>
-          <input id="instansi" class="form-control" placeholder="KPID Sulawesi Tengah">
-        </div>
+        <div class="row g-4">
 
-        <!-- Email -->
-        <div class="col-md-6">
-          <label class="form-label fw-semibold">Email</label>
-          <input id="email" type="email" class="form-control" placeholder="info@kpid.go.id">
-        </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Nama Instansi</label>
+            <input id="instansi" class="form-control" placeholder="KPID Sulawesi Tengah">
+          </div>
 
-        <!-- Alamat -->
-        <div class="col-12">
-          <label class="form-label fw-semibold">Alamat</label>
-          <textarea id="alamat" rows="3" class="form-control" placeholder="Jl. M.T Haryono No.3, Palu"></textarea>
-        </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Email</label>
+            <input id="email" type="email" class="form-control" placeholder="info@kpid.go.id">
+          </div>
 
-        <!-- Logo -->
-        <div class="col-md-6">
-          <label class="form-label fw-semibold">Logo Instansi</label>
+          <div class="col-12">
+            <label class="form-label fw-semibold">Alamat</label>
+            <textarea id="alamat" rows="3" class="form-control" placeholder="Jl. M.T Haryono No.3, Palu"></textarea>
+          </div>
 
-          <div class="border rounded-4 p-3 text-center bg-light">
-            <img id="logoPreview" src="../assets/icons/kpid-logo.jpeg"
-                 style="width:90px;height:90px;object-fit:contain">
-            <div class="mt-3">
-              <input id="logoInput" type="file" class="form-control" accept="image/*">
+          <!-- Logo -->
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Logo Instansi</label>
+
+            <div class="border rounded-4 p-3 text-center bg-light">
+
+              <img id="logoPreview"
+                   src="../assets/icons/kpid-logo.jpeg"
+                   class="img-fluid mb-3"
+                   style="width:90px;height:90px;object-fit:contain;">
+
+              <input id="settingLogo"
+                     type="file"
+                     class="form-control"
+                     accept="image/*">
+
             </div>
           </div>
-        </div>
 
-        <!-- Foto Profil -->
-        <div class="col-md-6">
-          <label class="form-label fw-semibold">Foto Profil Admin</label>
+          <!-- Foto Profil -->
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Foto Profil Admin</label>
 
-          <div class="border rounded-4 p-3 text-center bg-light">
-            <img id="profilePreview" src="../assets/icons/default-user.png"
-                 style="width:90px;height:90px;border-radius:50%;object-fit:cover">
-            <div class="mt-3">
-              <input id="profileInput" type="file" class="form-control" accept="image/*">
+            <div class="border rounded-4 p-3 text-center bg-light">
+
+              <img id="profilePreview"
+                   src="../assets/icons/default-user.png"
+                   class="rounded-circle mb-3"
+                   style="width:90px;height:90px;object-fit:cover;">
+
+              <input id="profilePhoto"
+                     type="file"
+                     class="form-control mb-2"
+                     accept="image/*">
+
+              <button type="button"
+                      id="clearProfile"
+                      class="btn btn-sm btn-outline-danger">
+                Hapus Foto
+              </button>
+
             </div>
           </div>
+
+          <!-- Tema -->
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Tema Tampilan</label>
+
+            <select id="themeSelect" class="form-select">
+              <option value="light">Light Mode</option>
+              <option value="dark">Dark Mode</option>
+              <option value="system">Ikuti Sistem</option>
+            </select>
+          </div>
+
+          <!-- Bahasa -->
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Bahasa</label>
+
+            <select id="languageSelect" class="form-select">
+              <option value="id">Indonesia</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+
         </div>
 
-        <!-- Tema -->
-        <div class="col-md-6">
-          <label class="form-label fw-semibold">Tema Tampilan</label>
+        <hr class="my-4">
 
-          <select id="themeSelect" class="form-select">
-            <option value="light">Light Mode</option>
-            <option value="dark">Dark Mode</option>
-            <option value="system">Ikuti Sistem</option>
-          </select>
+        <div class="d-flex gap-2 flex-wrap">
+
+          <button id="saveSetting"
+                  type="submit"
+                  class="btn btn-primary px-4">
+            💾 Simpan Perubahan
+          </button>
+
+          <button id="resetBtn"
+                  type="reset"
+                  class="btn btn-outline-secondary">
+            Reset
+          </button>
+
         </div>
 
-        <!-- Bahasa -->
-        <div class="col-md-6">
-          <label class="form-label fw-semibold">Bahasa</label>
-
-          <select id="language" class="form-select">
-            <option>Indonesia</option>
-            <option>English</option>
-          </select>
-        </div>
-
-      </div>
-
-      <hr class="my-4">
-
-      <div class="d-flex gap-2 flex-wrap">
-        <button id="saveBtn" class="btn btn-primary px-4">
-          💾 Simpan Perubahan
-        </button>
-
-        <button id="resetBtn" class="btn btn-outline-secondary">
-          Reset
-        </button>
-      </div>
+      </form>
 
     </section>
 
@@ -197,49 +219,28 @@
 <script src="../js/settings.js"></script>
 
 <script>
-// ================= USER =================
+// USER
 const role = localStorage.getItem("sipad_role") || "ADMIN";
-document.getElementById("userRole").textContent = role;
-document.getElementById("userAvatar").textContent = role.charAt(0);
+userRole.textContent = role;
+userAvatar.textContent = role.charAt(0);
 
-// ================= LOGOUT =================
-document.getElementById("logout").onclick = async (e)=>{
+// LOGOUT
+logout.onclick = async e=>{
   e.preventDefault();
-
-  try{
-    await api.logout();
-  }catch(err){}
-
+  try{ await api.logout(); }catch(err){}
   localStorage.clear();
   location.replace("/pages/login.html");
 };
 
-// ================= MOBILE SIDEBAR =================
-const menu = document.getElementById("menuToggle");
-const sidebar = document.getElementById("sidebar");
-const overlay = document.getElementById("sidebarOverlay");
-
-menu.onclick = ()=>{
+// MOBILE
+menuToggle.onclick = ()=>{
   sidebar.classList.toggle("show");
-  overlay.classList.toggle("show");
+  sidebarOverlay.classList.toggle("show");
 };
 
-overlay.onclick = ()=>{
+sidebarOverlay.onclick = ()=>{
   sidebar.classList.remove("show");
-  overlay.classList.remove("show");
-};
-
-// ================= PREVIEW IMAGE =================
-logoInput.onchange = e=>{
-  if(e.target.files[0]){
-    logoPreview.src = URL.createObjectURL(e.target.files[0]);
-  }
-};
-
-profileInput.onchange = e=>{
-  if(e.target.files[0]){
-    profilePreview.src = URL.createObjectURL(e.target.files[0]);
-  }
+  sidebarOverlay.classList.remove("show");
 };
 </script>
 
