@@ -702,12 +702,14 @@ body{
 
 .dashboard-grid{
     display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:22px;
+    grid-template-columns:minmax(0,2fr) 360px;
+    gap:24px;
     align-items:start;
 }
-
 .panel{
+    width:100%;
+    max-width:360px;
+    justify-self:end;
     background:#fff;
     border:1px solid #E5E7EB;
     border-radius:22px;
