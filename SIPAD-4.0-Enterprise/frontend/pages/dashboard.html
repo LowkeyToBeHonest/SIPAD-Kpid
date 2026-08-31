@@ -143,7 +143,7 @@
 
       <div class="glass stat-card">
         <div class="stat-icon">●</div>
-        <div class="stat-title">Laporan</div>
+        <div class="stat-title">Dokumentasi</div>
         <div class="stat-value" id="totalReports">0</div>
       </div>
 
@@ -154,33 +154,36 @@
       <div class="glass content-panel">
 
         <div class="toolbar">
-          <h2>Arsip Terbaru</h2>
-          <a class="btn btn-primary btn-sm rounded-pill px-3" href="arsip.html">
-          Lihat Semua
-          </a>
-        </div>
+  <h2 class="mb-0">Arsip Terbaru</h2>
 
-        <div class="table-wrap">
+  <a class="btn btn-danger btn-sm rounded-pill px-3" href="arsip.html">
+    Lihat Semua
+  </a>
+</div>
 
-          <table class="table align-middle">
+<div class="table-wrap modern-table">
 
-            <thead>
-              <tr>
-                <th>Nomor</th>
-                <th>Judul</th>
-                <th>Kategori</th>
-              </tr>
-            </thead>
+  <table class="table table-hover align-middle mb-0">
 
-            <tbody id="recentArchives">
-              <tr>
-                <td colspan="3" class="empty-state">
-                  Memuat data...
-                </td>
-              </tr>
-            </tbody>
+    <thead>
+      <tr>
+        <th width="170">Nomor</th>
+        <th>Judul</th>
+        <th width="180">Kategori</th>
+      </tr>
+    </thead>
 
-          </table>
+    <tbody id="recentArchives">
+      <tr>
+        <td colspan="3" class="empty-state text-center py-4">
+          Memuat data...
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>
 
         </div>
 
