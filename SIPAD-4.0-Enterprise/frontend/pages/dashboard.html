@@ -11,7 +11,6 @@
 
   <script src="../js/theme.js"></script>
 
-  <!-- Proteksi Login -->
   <script>
     if (!localStorage.getItem("sipad_token")) {
       window.location.replace("/pages/login.html");
@@ -21,86 +20,83 @@
 
 <body>
 
+  <!-- MOBILE MENU -->
+  <button id="menuToggle" class="mobile-menu-btn">☰</button>
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
 <div class="app-shell">
 
-<!-- SIDEBAR -->
-<aside class="app-sidebar">
+  <!-- SIDEBAR -->
+  <aside class="app-sidebar" id="sidebar">
 
-  <div>
+    <div>
 
-    <div class="brand">
-      <div class="brand-mark" id="institutionLogoMark">
-        <img src="../assets/icons/kpid-logo.jpeg" alt="Logo KPID">
+      <div class="brand">
+        <div class="brand-mark">
+          <img src="../assets/icons/kpid-logo.jpeg" alt="Logo KPID">
+        </div>
+
+        <div class="brand-copy">
+          <strong>SIPAD</strong>
+          <small>Enterprise 4.0</small>
+        </div>
       </div>
 
-      <div class="brand-copy">
-        <strong>SIPAD</strong>
-        <small>Enterprise 4.0</small>
-      </div>
+      <div class="sidebar-label">WORKSPACE</div>
+
+      <nav>
+
+        <a class="nav-link active" href="dashboard.html">
+          <span>⌂</span><span>Dashboard</span>
+        </a>
+
+        <a class="nav-link" href="arsip.html">
+          <span>▣</span><span>Data Arsip</span>
+        </a>
+
+        <a class="nav-link" href="upload.html">
+          <span>＋</span><span>Upload Arsip</span>
+        </a>
+
+        <a class="nav-link" href="laporan.html">
+          <span>▤</span><span>Laporan</span>
+        </a>
+
+        <a class="nav-link" href="audit.html">
+          <span>◷</span><span>Audit Aktivitas</span>
+        </a>
+
+        <a class="nav-link" href="users.html">
+          <span>♙</span><span>Pengguna</span>
+        </a>
+
+        <a class="nav-link" href="settings.html">
+          <span>⚙</span><span>Pengaturan</span>
+        </a>
+
+      </nav>
+
     </div>
 
-    <div class="sidebar-label">WORKSPACE</div>
+    <div>
 
-    <nav>
+      <div class="user-chip">
+        <div class="user-avatar" id="userAvatar">A</div>
 
-      <a class="nav-link active" href="dashboard.html">
-        <span>⌂</span>
-        <span>Dashboard</span>
-      </a>
-
-      <a class="nav-link" href="arsip.html">
-        <span>▣</span>
-        <span>Data Arsip</span>
-      </a>
-
-      <a class="nav-link" href="upload.html">
-        <span>＋</span>
-        <span>Upload Arsip</span>
-      </a>
-
-      <a class="nav-link" href="laporan.html">
-        <span>▤</span>
-        <span>Laporan</span>
-      </a>
-
-      <a class="nav-link" href="audit.html">
-        <span>◷</span>
-        <span>Audit Aktivitas</span>
-      </a>
-
-      <a class="nav-link" href="users.html">
-        <span>♙</span>
-        <span>Pengguna</span>
-      </a>
-
-      <a class="nav-link" href="settings.html">
-        <span>⚙</span>
-        <span>Pengaturan</span>
-      </a>
-
-    </nav>
-
-  </div>
-
-  <div>
-
-    <div class="user-chip">
-      <div class="user-avatar" id="userAvatar">A</div>
-
-      <div class="user-copy">
-        <strong id="userRole">ADMIN</strong>
-        <small>Akses aktif</small>
+        <div class="user-copy">
+          <strong id="userRole">ADMIN</strong>
+          <small>Akses aktif</small>
+        </div>
       </div>
+
+      <a class="nav-link logout-link" id="logout" href="#">
+        <span>↪</span>
+        <span>Keluar</span>
+      </a>
+
     </div>
 
-    <a class="nav-link logout-link" id="logout" href="#">
-      <span>↪</span>
-      <span>Keluar</span>
-    </a>
-
-  </div>
-
-</aside>
+  </aside>
 
   <!-- CONTENT -->
   <main class="app-content">
@@ -133,44 +129,41 @@
     <!-- STATISTIK -->
     <section class="stats-grid">
 
-  <div class="glass stat-card">
-    <div class="stat-icon">▣</div>
-    <div class="stat-title">Total Arsip</div>
-    <div class="stat-value" id="totalArchives">0</div>
-  </div>
+      <div class="glass stat-card">
+        <div class="stat-icon">▣</div>
+        <div class="stat-title">Total Arsip</div>
+        <div class="stat-value" id="totalArchives">0</div>
+      </div>
 
-  <div class="glass stat-card">
-    <div class="stat-icon">↓</div>
-    <div class="stat-title">Surat Masuk</div>
-    <div class="stat-value" id="totalIncoming">0</div>
-  </div>
+      <div class="glass stat-card">
+        <div class="stat-icon">↓</div>
+        <div class="stat-title">Surat Masuk</div>
+        <div class="stat-value" id="totalIncoming">0</div>
+      </div>
 
-  <div class="glass stat-card">
-    <div class="stat-icon">↑</div>
-    <div class="stat-title">Surat Keluar</div>
-    <div class="stat-value" id="totalOutgoing">0</div>
-  </div>
+      <div class="glass stat-card">
+        <div class="stat-icon">↑</div>
+        <div class="stat-title">Surat Keluar</div>
+        <div class="stat-value" id="totalOutgoing">0</div>
+      </div>
 
-  <div class="glass stat-card">
-    <div class="stat-icon">●</div>
-    <div class="stat-title">Laporan</div>
-    <div class="stat-value" id="totalReports">0</div>
-  </div>
+      <div class="glass stat-card">
+        <div class="stat-icon">●</div>
+        <div class="stat-title">Laporan</div>
+        <div class="stat-value" id="totalReports">0</div>
+      </div>
 
-</section>
+    </section>
+
     <section class="dashboard-grid">
 
-      <!-- TABEL -->
       <div class="glass content-panel">
 
         <div class="toolbar">
-
           <h2>Arsip Terbaru</h2>
-
           <a class="btn btn-sm btn-outline-primary" href="arsip.html">
             Lihat Semua
           </a>
-
         </div>
 
         <div class="table-wrap">
@@ -199,7 +192,6 @@
 
       </div>
 
-      <!-- AKSES CEPAT -->
       <div class="glass panel">
 
         <div class="panel-heading">
@@ -265,76 +257,61 @@ async function loadDashboard(){
     const setting = await api.setting();
     const data = await api.list();
 
-    document.getElementById("institutionName").textContent =
-      setting.instansi || "SIPAD";
+    institutionName.textContent = setting.instansi || "SIPAD";
+    institutionAddress.textContent = setting.alamat || "";
 
-    document.getElementById("institutionAddress").textContent =
-      setting.alamat || "";
-
-    document.getElementById("totalArchives").textContent = data.length;
-
-    document.getElementById("totalIncoming").textContent =
-      data.filter(i=>i.kategori==="Surat Masuk").length;
-
-    document.getElementById("totalOutgoing").textContent =
-      data.filter(i=>i.kategori==="Surat Keluar").length;
-
-    document.getElementById("totalReports").textContent =
-      data.filter(i=>["Laporan","Dokumentasi"].includes(i.kategori)).length;
+    totalArchives.textContent = data.length;
+    totalIncoming.textContent = data.filter(i=>i.kategori==="Surat Masuk").length;
+    totalOutgoing.textContent = data.filter(i=>i.kategori==="Surat Keluar").length;
+    totalReports.textContent = data.filter(i=>["Laporan","Dokumentasi"].includes(i.kategori)).length;
 
     table.innerHTML="";
 
     data.slice(-5).reverse().forEach(item=>{
-
       table.innerHTML += `
-        <tr>
-          <td>${escapeText(item.nomor)}</td>
-          <td>${escapeText(item.judul)}</td>
-          <td>${escapeText(item.kategori)}</td>
-        </tr>
-      `;
-
+      <tr>
+        <td>${escapeText(item.nomor)}</td>
+        <td>${escapeText(item.judul)}</td>
+        <td>${escapeText(item.kategori)}</td>
+      </tr>`;
     });
 
     if(!data.length){
-      table.innerHTML =
-        `<tr><td colspan="3" class="empty-state">
-          Belum ada arsip
-        </td></tr>`;
+      table.innerHTML=`<tr><td colspan="3" class="empty-state">Belum ada arsip</td></tr>`;
     }
 
   }catch(err){
 
-    document.getElementById("apiStatus").innerHTML =
-      `<span class="status-dot" style="background:red"></span> API Offline`;
+    apiStatus.innerHTML=`<span class="status-dot" style="background:red"></span> API Offline`;
 
-    table.innerHTML =
-      `<tr><td colspan="3" class="empty-state">
-        ${err.message}
-      </td></tr>`;
+    table.innerHTML=`<tr><td colspan="3" class="empty-state">${err.message}</td></tr>`;
   }
-
 }
 
-document.getElementById("userRole").textContent =
-  localStorage.getItem("sipad_role") || "GUEST";
+userRole.textContent = localStorage.getItem("sipad_role") || "GUEST";
+userAvatar.textContent = (localStorage.getItem("sipad_role") || "G").charAt(0);
 
-document.getElementById("userAvatar").textContent =
-  (localStorage.getItem("sipad_role") || "G").charAt(0);
-
-document.getElementById("logout").onclick = async function(e){
-
+logout.onclick = async (e)=>{
   e.preventDefault();
-
-  try{
-    await api.logout();
-  }catch{}
-
+  try{ await api.logout(); }catch{}
   localStorage.clear();
-
-  window.location.replace("/pages/login.html");
-
+  location.replace("/pages/login.html");
 };
+
+// ===== MOBILE SIDEBAR =====
+const menu = document.getElementById("menuToggle");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("sidebarOverlay");
+
+menu.addEventListener("click", ()=>{
+  sidebar.classList.toggle("show");
+  overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click", ()=>{
+  sidebar.classList.remove("show");
+  overlay.classList.remove("show");
+});
 
 loadDashboard();
 </script>
