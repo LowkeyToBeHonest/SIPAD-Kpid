@@ -269,7 +269,11 @@ async function loadDashboard(){
       <tr>
         <td>${escapeText(item.nomor)}</td>
         <td>${escapeText(item.judul)}</td>
-        <td>${escapeText(item.kategori)}</td>
+        <td>
+  <span class="category-badge">
+    ${escapeText(item.kategori)}
+  </span>
+</td>
       </tr>`;
     });
 
