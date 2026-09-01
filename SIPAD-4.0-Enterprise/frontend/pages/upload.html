@@ -206,9 +206,18 @@ document.getElementById("userAvatar").textContent =
 document.getElementById("logout").onclick = async e=>{
   e.preventDefault();
   try{ await api.logout(); }catch(e){}
-  localStorage.clear();
+  if(window.clearSipadSession)window.clearSipadSession();else localStorage.clear();
   location.replace("/pages/login.html");
 };
+  // Mobile sidebar toggle
+(function(){
+  const menu=document.getElementById("menuToggle");
+  const sb=document.getElementById("sidebar");
+  const ov=document.getElementById("sidebarOverlay");
+  if(!menu||!sb||!ov)return;
+  menu.addEventListener("click",()=>{sb.classList.toggle("show");ov.classList.toggle("show");});
+  ov.addEventListener("click",()=>{sb.classList.remove("show");ov.classList.remove("show");});
+})();
 
 const chooseBtn=document.getElementById("chooseBtn");
 const fileInput=document.getElementById("fileInput");
