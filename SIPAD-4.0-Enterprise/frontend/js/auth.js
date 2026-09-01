@@ -20,10 +20,23 @@ async function login() {
   try {
 
     const res = await api.login(email, password);
-
+    if (typeof window.saveSipadSession === "function") {
+      window.saveSipadSession({
+        token: res.token,
+        role: res.role,
+        name: res.name,
+      });
+    } else {
+      // fallback
+      const now = Date.now();
+      const ttl = 4 * 60 * 60 * 1000;
     localStorage.setItem("sipad_token", res.token);
     localStorage.setItem("sipad_role", res.role);
     localStorage.setItem("sipad_name", res.name);
+    localStorage.setItem("sipad_login_at", String(now));
+    localStorage.setItem("sipad_expiry", String(now + ttl));
+    }
+
 
     window.location.replace("/pages/dashboard.html");
 
