@@ -292,7 +292,7 @@ userAvatar.textContent = (localStorage.getItem("sipad_role") || "G").charAt(0);
 logout.onclick = async (e)=>{
   e.preventDefault();
   try{ await api.logout(); }catch{}
-  localStorage.clear();
+  if(window.clearSipadSession)window.clearSipadSession();else localStorage.clear();
   location.replace("/pages/login.html");
 };
 
