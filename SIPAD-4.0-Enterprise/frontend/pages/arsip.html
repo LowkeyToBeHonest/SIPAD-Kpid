@@ -233,7 +233,7 @@ document.getElementById("logout").onclick = async function(e){
     await api.logout();
   }catch{}
 
-  localStorage.clear();
+ if(window.clearSipadSession)window.clearSipadSession();else localStorage.clear();
   location.replace("/pages/login.html");
 };
 
