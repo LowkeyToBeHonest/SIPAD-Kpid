@@ -11,11 +11,8 @@
 
   <script src="../js/theme.js"></script>
 
-  <script>
-    if (!localStorage.getItem("sipad_token")) {
-      window.location.replace("/pages/login.html");
-    }
-  </script>
+ <script src="../js/auth-guard.js"></script>
+  <script>guardSession();</script>
 </head>
 
 <body>
