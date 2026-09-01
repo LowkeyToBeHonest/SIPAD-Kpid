@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+<script src="/js/auth-guard.js"></script>
 <script>
-if(localStorage.getItem("sipad_token")){
+  if (window.isSipadSessionValid && window.isSipadSessionValid()) {
     location.replace("/pages/dashboard.html");
-}else{
+  } else {
+    if (window.clearSipadSession) window.clearSipadSession();
     location.replace("/pages/login.html");
-}
+  }
 </script>
