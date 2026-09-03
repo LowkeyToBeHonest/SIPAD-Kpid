@@ -7,6 +7,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="../css/style.css" rel="stylesheet">
+  <link href="../css/bootstrap-custom.css" rel="stylesheet">
   <link rel="icon" type="image/jpeg" href="../assets/icons/kpid-logo.jpeg">
 
   <script src="../js/theme.js"></script>
@@ -95,51 +96,52 @@
   <main class="app-content">
 
     <header class="page-header dashboard-header">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Pantau aktivitas dan statistik sistem</p>
+      </div>
+      <div class="dashboard-header-actions">
+        <div class="institution-badge"><span class="status-dot"></span><span id="headerInstitution">KPID Sulawesi Tengah</span></div>
+        <button class="notification-button" type="button" aria-label="Notifikasi">♧<span></span></button>
+      </div>
+    </header>
 
-  <div>
-    <div class="eyebrow" id="institutionName">
-      KPID Sulawesi Tengah
-    </div>
-
-    <h1 class="welcome-title">
-      Selamat Datang di SIPAD
-    </h1>
-
-    <p class="subtitle mb-0" id="institutionAddress">
-      Pantau, kelola, dan temukan dokumen penting dalam satu ruang kerja.
-    </p>
-  </div>
-
-  <div class="header-badge">
-    <div class="status-dot"></div>
-    <span>Online</span>
-  </div>
-
-</header>
+    <section class="welcome-card">
+      <div class="welcome-status" id="apiStatus"><span class="status-dot"></span> Sistem Online</div>
+      <h2>Selamat Datang di SIPAD</h2>
+      <p id="institutionAddress">Pantau, kelola, dan temukan dokumen penting dalam satu ruang kerja.</p>
+      <small id="institutionName">KPID Sulawesi Tengah · Enterprise 4.0</small>
+    </section>
 
     <!-- STATISTIK -->
     <section class="stats-grid">
 
       <div class="glass stat-card">
-        <div class="stat-icon">▣</div>
+        <div class="stat-icon" aria-label="Total arsip">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h6l2 2h9v9a2 2 0 0 1-2 2h-15a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z"/><path d="M2.5 10.5h18"/></svg>
+        </div>
+        <div class="stat-trend" id="trendArchives">Memuat...</div>
         <div class="stat-title">Total Arsip</div>
         <div class="stat-value" id="totalArchives">0</div>
       </div>
 
       <div class="glass stat-card">
         <div class="stat-icon">↓</div>
+        <div class="stat-trend" id="trendIncoming">Memuat...</div>
         <div class="stat-title">Surat Masuk</div>
         <div class="stat-value" id="totalIncoming">0</div>
       </div>
 
       <div class="glass stat-card">
         <div class="stat-icon">↑</div>
+        <div class="stat-trend" id="trendOutgoing">Memuat...</div>
         <div class="stat-title">Surat Keluar</div>
         <div class="stat-value" id="totalOutgoing">0</div>
       </div>
 
       <div class="glass stat-card">
         <div class="stat-icon">●</div>
+        <div class="stat-trend" id="trendReports">Memuat...</div>
         <div class="stat-title">Dokumentasi</div>
         <div class="stat-value" id="totalReports">0</div>
       </div>
@@ -158,31 +160,9 @@
   </a>
 </div>
 
-<div class="table-wrap modern-table">
-
-  <table class="table table-hover align-middle mb-0">
-
-    <thead>
-      <tr>
-        <th width="170">Nomor</th>
-        <th>Judul</th>
-        <th width="180">Kategori</th>
-      </tr>
-    </thead>
-
-    <tbody id="recentArchives">
-      <tr>
-        <td colspan="3" class="empty-state text-center py-4">
-          Memuat data...
-        </td>
-      </tr>
-    </tbody>
-
-  </table>
-
+<div class="archive-list" id="recentArchives">
+  <div class="empty-state">Memuat data...</div>
 </div>
-
-        </div>
 
       </div>
 
@@ -198,7 +178,7 @@
             <span class="quick-icon">＋</span>
             <span>
               <strong>Upload Arsip</strong>
-              <small>Tambah dokumen</small>
+              <small>Tambah dokumen baru</small>
             </span>
           </a>
 
@@ -206,23 +186,23 @@
             <span class="quick-icon">▤</span>
             <span>
               <strong>Laporan</strong>
-              <small>Ekspor data</small>
+              <small>Ekspor &amp; analisis data</small>
             </span>
           </a>
 
           <a class="quick-link" href="audit.html">
             <span class="quick-icon">◷</span>
             <span>
-              <strong>Audit</strong>
-              <small>Riwayat sistem</small>
+              <strong>Audit Log</strong>
+              <small>Riwayat aktivitas</small>
             </span>
           </a>
 
-          <a class="quick-link" href="settings.html">
-            <span class="quick-icon">⚙</span>
+          <a class="quick-link" href="arsip.html">
+            <span class="quick-icon">▣</span>
             <span>
-              <strong>Pengaturan</strong>
-              <small>Kelola instansi</small>
+              <strong>Semua Arsip</strong>
+              <small>Kelola pusat dokumen</small>
             </span>
           </a>
 
@@ -242,9 +222,53 @@
 <script>
 const escapeText = v => v == null ? "" : String(v);
 
+function archiveDate(item){
+  const date = new Date(item.tanggal);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function periodCount(data, category, start, end){
+  return data.filter(item=>{
+    const date = archiveDate(item);
+    return date && date >= start && date < end && (!category || item.kategori === category);
+  }).length;
+}
+
+function setInsight(elementId, current, previous, period){
+  const element = document.getElementById(elementId);
+  if(!element)return;
+  if(!current && !previous){ element.textContent = `0 ${period}`; return; }
+  const delta = current - previous;
+  element.textContent = delta > 0 ? `↗ +${delta} vs lalu` : delta < 0 ? `↘ ${delta} vs lalu` : `→ Stabil ${period}`;
+}
+
+function renderInsights(data){
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const previousMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const weekStart = new Date(now);
+  weekStart.setHours(0, 0, 0, 0);
+  weekStart.setDate(weekStart.getDate() - 6);
+  const previousWeekStart = new Date(weekStart);
+  previousWeekStart.setDate(previousWeekStart.getDate() - 7);
+  const currentMonth = periodCount(data, null, monthStart, new Date(now.getFullYear(), now.getMonth() + 1, 1));
+  const previousMonth = periodCount(data, null, previousMonthStart, monthStart);
+  const currentIncoming = periodCount(data, "Surat Masuk", weekStart, new Date(now.getTime() + 86400000));
+  const previousIncoming = periodCount(data, "Surat Masuk", previousWeekStart, weekStart);
+  const currentOutgoing = periodCount(data, "Surat Keluar", weekStart, new Date(now.getTime() + 86400000));
+  const previousOutgoing = periodCount(data, "Surat Keluar", previousWeekStart, weekStart);
+  const nextMonthStart = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  const currentReports = periodCount(data, "Laporan", monthStart, nextMonthStart) + periodCount(data, "Dokumentasi", monthStart, nextMonthStart);
+  const previousReports = periodCount(data, "Laporan", previousMonthStart, monthStart) + periodCount(data, "Dokumentasi", previousMonthStart, monthStart);
+  setInsight("trendArchives", currentMonth, previousMonth, "bulan ini");
+  setInsight("trendIncoming", currentIncoming, previousIncoming, "7 hari ini");
+  setInsight("trendOutgoing", currentOutgoing, previousOutgoing, "7 hari ini");
+  setInsight("trendReports", currentReports, previousReports, "bulan ini");
+}
+
 async function loadDashboard(){
 
-  const table = document.getElementById("recentArchives");
+  const archiveList = document.getElementById("recentArchives");
 
   try{
 
@@ -252,37 +276,40 @@ async function loadDashboard(){
     const data = await api.list();
 
     institutionName.textContent = setting.instansi || "SIPAD";
+    headerInstitution.textContent = setting.instansi || "KPID Sulawesi Tengah";
     institutionAddress.textContent = setting.alamat || "";
 
     totalArchives.textContent = data.length;
     totalIncoming.textContent = data.filter(i=>i.kategori==="Surat Masuk").length;
     totalOutgoing.textContent = data.filter(i=>i.kategori==="Surat Keluar").length;
     totalReports.textContent = data.filter(i=>["Laporan","Dokumentasi"].includes(i.kategori)).length;
+    renderInsights(data);
 
-    table.innerHTML="";
+    archiveList.innerHTML="";
 
     data.slice(-5).reverse().forEach(item=>{
-      table.innerHTML += `
-      <tr>
-        <td>${escapeText(item.nomor)}</td>
-        <td>${escapeText(item.judul)}</td>
-        <td>
-  <span class="category-badge">
-    ${escapeText(item.kategori)}
-  </span>
-</td>
-      </tr>`;
+      const category = escapeText(item.kategori) || "Arsip";
+      const categoryClass = category.toLowerCase().replace(/\s+/g, "-");
+      archiveList.innerHTML += `
+      <a class="archive-item" href="arsip.html">
+        <span class="archive-icon archive-icon-${categoryClass}">▣</span>
+        <span class="archive-copy">
+          <strong>${escapeText(item.judul) || "Tanpa judul"}</strong>
+          <small>${escapeText(item.nomor)}${item.tanggal ? " · " + escapeText(item.tanggal) : ""}</small>
+        </span>
+        <span class="category-badge category-${categoryClass}">${category}</span>
+      </a>`;
     });
 
     if(!data.length){
-      table.innerHTML=`<tr><td colspan="3" class="empty-state">Belum ada arsip</td></tr>`;
+      archiveList.innerHTML=`<div class="empty-state">Belum ada arsip</div>`;
     }
 
   }catch(err){
 
-    apiStatus.innerHTML=`<span class="status-dot" style="background:red"></span> API Offline`;
+    apiStatus.innerHTML=`<span class="status-dot offline"></span><span>API Offline</span>`;
 
-    table.innerHTML=`<tr><td colspan="3" class="empty-state">${err.message}</td></tr>`;
+    archiveList.innerHTML=`<div class="empty-state">${escapeText(err.message)}</div>`;
   }
 }
 
@@ -293,7 +320,7 @@ logout.onclick = async (e)=>{
   e.preventDefault();
   try{ await api.logout(); }catch{}
   if(window.clearSipadSession)window.clearSipadSession();else localStorage.clear();
-  location.replace("/pages/login.html");
+  location.replace("login.html");
 };
 
 // ===== MOBILE SIDEBAR =====
