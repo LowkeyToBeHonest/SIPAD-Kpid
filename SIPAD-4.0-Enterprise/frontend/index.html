@@ -2,9 +2,9 @@
 <script src="/js/auth-guard.js"></script>
 <script>
   if (window.isSipadSessionValid && window.isSipadSessionValid()) {
-    location.replace("/pages/dashboard.html");
+    location.replace("pages/dashboard.html");
   } else {
     if (window.clearSipadSession) window.clearSipadSession();
-    location.replace("/pages/login.html");
+    location.replace("pages/login.html");
   }
 </script>
