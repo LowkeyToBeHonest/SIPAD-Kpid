@@ -78,7 +78,7 @@ async function upload(){
     kategori: document.getElementById("kategori").value,
     tanggal: document.getElementById("tanggal").value,
     bidang: document.getElementById("bidang").value.trim(),
-    deskripsi: document.getElementById("deskripsi").value.trim(),
+    keterangan: document.getElementById("deskripsi").value.trim(),
     filename: file.name,
     mime: file.type,
     data: ""
