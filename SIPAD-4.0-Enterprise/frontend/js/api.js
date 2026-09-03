@@ -15,16 +15,14 @@ async function request(action, options = {}) {
 
     if (options.method === "POST") {
 
-      const form = new FormData();
-      form.append("action", action);
-      form.append("token", token);
+      const body = new URLSearchParams({ action, token });
       Object.entries(options.body || {}).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) form.append(key, value);
+        if (value !== undefined && value !== null) body.set(key, String(value));
       });
 
       response = await fetch(CONFIG.WEBAPP, {
         method: "POST",
-        body: form,
+        body: body.toString(),
         signal: controller.signal
       });
 
