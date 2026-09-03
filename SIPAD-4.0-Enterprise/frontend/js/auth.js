@@ -1,7 +1,7 @@
 async function login() {
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
-  const button = document.querySelector('button[onclick="login()"]');
+  const button = document.querySelector('.sipad-login-button');
 
   const email = emailInput.value.trim();
   const password = passwordInput.value;
@@ -38,7 +38,7 @@ async function login() {
     }
 
 
-    window.location.replace("/pages/dashboard.html");
+    window.location.replace("dashboard.html");
 
   } catch (err) {
 
