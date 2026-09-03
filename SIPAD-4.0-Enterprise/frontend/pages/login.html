@@ -2,6 +2,93 @@
 <html lang="id">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Login SIPAD</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="../css/style.css" rel="stylesheet"><script src="../js/theme.js"></script><script src="../js/auth-guard.js"></script><script>if(window.isSipadSessionValid&&window.isSipadSessionValid()){location.replace("/pages/dashboard.html");}else{if(window.clearSipadSession)window.clearSipadSession();}</script><link rel="icon" type="image/jpeg" href="../assets/icons/kpid-logo.jpeg">
-<style>@media(max-width:480px){body{padding:16px}.card{width:100%!important;padding:24px!important}.card h3{font-size:24px}.form-control{min-height:48px}}</style>
-</head><body class="bg-light d-flex align-items-center justify-content-center" style="min-height:100vh"><div class="card p-4 shadow" style="width:380px"><div class="text-center mb-3"><img src="../assets/icons/kpid-logo.jpeg" alt="Logo KPID" style="width:76px;height:76px;object-fit:contain;border-radius:18px"><h3 class="mt-3 mb-1">Masuk ke SIPAD</h3><small class="text-muted">Sistem Informasi Pengarsipan Digital</small></div><label class="form-label" for="email">Email</label><input id="email" class="form-control mb-3" placeholder="nama@kpid.go.id" autocomplete="username"><label class="form-label" for="password">Password</label><input id="password" type="password" class="form-control mb-3" placeholder="Masukkan password" autocomplete="current-password"><button class="btn btn-primary w-100" onclick="login()">Masuk</button></div><script src="../js/config.js"></script><script src="../js/api.js"></script><script src="../js/auth.js"></script></body></html>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="../css/style.css" rel="stylesheet"><script src="../js/theme.js"></script><script src="../js/auth-guard.js"></script><script>if(window.isSipadSessionValid&&window.isSipadSessionValid()){location.replace("dashboard.html");}else{if(window.clearSipadSession)window.clearSipadSession();}</script><link rel="icon" type="image/jpeg" href="../assets/icons/kpid-logo.jpeg">
+</head>
+<body class="sipad-login-page">
+  <div class="sipad-login-shell">
+    <section class="sipad-login-hero">
+      <div class="sipad-logo-badge" aria-label="Logo SIPAD">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M32 8 48 14v15c0 11.8-7.2 22.5-16 27-8.8-4.5-16-15.2-16-27V14l16-6zm-2 17h4v12h-4zm2 18a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <h1>Sistem Informasi<br>Pengarsipan Digital</h1>
+
+      <p>Platform pengelolaan arsip digital terpadu untuk<br>KPID Sulawesi Tengah</p>
+
+      <div class="sipad-stat-grid">
+        <div class="sipad-stat-card">
+          <div class="value" id="statTotalArsip">0</div>
+          <div class="label">Total Arsip</div>
+        </div>
+        <div class="sipad-stat-card">
+          <div class="value" id="statPenggunaAktif">0</div>
+          <div class="label">Pengguna Aktif</div>
+        </div>
+        <div class="sipad-stat-card">
+          <div class="value" id="statDokumenBulanIni">0</div>
+          <div class="label">Dokumen Bulan Ini</div>
+        </div>
+      </div>
+
+      <div class="sipad-system-status">
+        <span class="status-dot"></span>
+        <span>Sistem aktif dan beroperasi normal</span>
+      </div>
+    </section>
+
+    <aside class="sipad-login-panel">
+      <h2>Masuk ke SIPAD</h2>
+      <p class="panel-subtitle">Sistem Informasi Pengarsipan Digital</p>
+
+      <form class="sipad-login-form" onsubmit="event.preventDefault(); login();">
+        <div class="field-group">
+          <label for="email">ALAMAT EMAIL</label>
+          <input id="email" type="email" placeholder="nama@kpid.go.id" autocomplete="username">
+        </div>
+
+        <div class="field-group">
+          <label for="password">KATA SANDI</label>
+          <div class="password-wrap">
+            <input id="password" type="password" placeholder="Masukkan password" autocomplete="current-password">
+            <span class="password-visibility" aria-label="Lihat password">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5c5.2 0 9.4 4.3 10.8 7-1.4 2.7-5.6 7-10.8 7S2.6 14.7 1.2 12C2.6 9.3 6.8 5 12 5zm0 2.2A4.8 4.8 0 1 0 12 16.8 4.8 4.8 0 0 0 12 7.2zm0 2a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6z" fill="currentColor"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <button type="submit" class="sipad-login-button">Masuk</button>
+      </form>
+
+    </aside>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script>
+    async function loadLoginStats() {
+      const totalEl = document.getElementById('statTotalArsip');
+      const activeEl = document.getElementById('statPenggunaAktif');
+      const monthEl = document.getElementById('statDokumenBulanIni');
+
+      if (!totalEl || !activeEl || !monthEl) return;
+
+      try {
+        const summary = await api.summary();
+        totalEl.textContent = Number(summary.totalArsip || 0);
+        activeEl.textContent = Number(summary.penggunaAktif || 0);
+        monthEl.textContent = Number(summary.dokumenBulanIni || 0);
+      } catch (error) {
+        console.error('Gagal memuat ringkasan login:', error);
+        totalEl.textContent = '0';
+        activeEl.textContent = '0';
+        monthEl.textContent = '0';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadLoginStats);
+  </script>
+  <script src="../js/auth.js"></script>
+</body>
+</html>
