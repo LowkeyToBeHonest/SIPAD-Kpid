@@ -42,7 +42,7 @@
 
   // Pelindung halaman: panggil di <head> halaman protected
   window.guardSession = function (loginPath) {
-    var target = loginPath || "/pages/login.html";
+    var target = loginPath || "login.html";
     if (!window.isSipadSessionValid()) {
       window.clearSipadSession();
       window.location.replace(target);
@@ -60,7 +60,7 @@
       !/login\.html$/.test(window.location.pathname)
     ) {
       window.clearSipadSession();
-      window.location.replace("/pages/login.html");
+      window.location.replace("login.html");
     }
   });
 })();
