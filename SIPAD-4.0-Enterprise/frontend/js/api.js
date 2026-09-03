@@ -16,14 +16,10 @@ async function request(action, options = {}) {
     if (options.method === "POST") {
 
       const form = new FormData();
-
       form.append("action", action);
       form.append("token", token);
-
       Object.entries(options.body || {}).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          form.append(key, value);
-        }
+        if (value !== undefined && value !== null) form.append(key, value);
       });
 
       response = await fetch(CONFIG.WEBAPP, {
@@ -60,7 +56,7 @@ async function request(action, options = {}) {
         localStorage.removeItem("sipad_role");
 
         if (!location.pathname.includes("/login")) {
-          window.location.replace("/pages/login.html");
+          window.location.replace("login.html");
         }
       }
 
@@ -130,18 +126,25 @@ function notify(title, message, type = "success") {
 
 const api = {
 
+  summary: () => request("summary"),
+
   list: () => request("list"),
 
   nextNumber: () => request("nextNumber"),
 
   audit: () => request("audit"),
 
+  users: () => request("users"),
+
+  createUser: (data) => request("createUser", { query: data }),
+
+  toggleUser: (email) => request("toggleUser", { query: { email } }),
+
   setting: () => request("setting"),
 
   login: (email, password) =>
     request("login", {
-      method: "POST",
-      body: { email, password }
+      query: { email, password }
     }),
 
   validate: () => request("validate"),
