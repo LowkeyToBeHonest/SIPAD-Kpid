@@ -7,6 +7,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="../css/style.css" rel="stylesheet">
+  <link href="../css/bootstrap-custom.css" rel="stylesheet">
   <script src="../js/theme.js"></script>
   <script src="../js/auth-guard.js"></script>
   <script>guardSession();</script>
@@ -94,23 +95,11 @@
   <header class="page-header">
 
     <div>
-      <div class="eyebrow">INSIGHT & EXPORT</div>
-
-      <h1 class="welcome-title">Laporan Arsip</h1>
+      <h1 class="welcome-title">Laporan</h1>
 
       <p class="subtitle mb-0">
-        Ringkas, cari, dan ekspor arsip aktif dalam format yang rapi.
+        Insight &amp; Export Data
       </p>
-    </div>
-
-    <div class="d-flex gap-2 flex-wrap">
-      <button id="excelButton" class="btn btn-success px-4 py-2 rounded-4 shadow-sm" onclick="exportExcel()">
-        📊 Excel
-      </button>
-
-      <button id="pdfButton" class="btn btn-danger px-4 py-2 rounded-4 shadow-sm" onclick="exportPDF()">
-        📕 PDF
-      </button>
     </div>
 
   </header>
@@ -118,7 +107,7 @@
   <!-- STATISTIK -->
 
     <!-- STATISTIK -->
-    <section class="stats-grid">
+    <section class="stats-grid report-stats-grid">
 
       <div class="glass stat-card">
         <div class="stat-icon">📁</div>
@@ -128,22 +117,41 @@
 
       <div class="glass stat-card">
         <div class="stat-icon">📄</div>
-        <div class="stat-title">Kategori Surat</div>
+        <div class="stat-title">Surat Masuk</div>
         <div class="stat-value" id="reportLetters">0</div>
       </div>
 
       <div class="glass stat-card">
         <div class="stat-icon">📝</div>
-        <div class="stat-title">Laporan</div>
-        <div class="stat-value" id="reportOther">0</div>
+        <div class="stat-title">Surat Keluar</div>
+        <div class="stat-value" id="reportOutgoing">0</div>
       </div>
 
       <div class="glass stat-card">
         <div class="stat-icon">✓</div>
-        <div class="stat-title">Ditampilkan</div>
-        <div class="stat-value" id="reportVisible">0</div>
+        <div class="stat-title">Laporan &amp; Dok</div>
+        <div class="stat-value" id="reportOther">0</div>
       </div>
 
+      <div class="report-actions">
+        <button id="excelButton" class="report-action excel-action" onclick="exportExcel()">
+          <span>▤</span><strong>Excel</strong>
+        </button>
+        <button id="pdfButton" class="report-action pdf-action" onclick="exportPDF()">
+          <span>⇩</span><strong>PDF</strong>
+        </button>
+      </div>
+
+    </section>
+
+    <section class="content-panel report-chart-panel">
+      <div class="chart-heading">
+        <div>
+          <h2>Distribusi Arsip per Bulan</h2>
+          <p id="chartPeriod">Ringkasan berdasarkan tanggal dokumen</p>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="archiveChart" aria-label="Grafik distribusi arsip per bulan"></canvas></div>
     </section>
 
     <!-- PANEL -->
@@ -168,7 +176,8 @@
 
           <select id="reportCategory" class="form-select">
             <option value="">Semua kategori</option>
-            <option>Surat</option>
+            <option>Surat Masuk</option>
+            <option>Surat Keluar</option>
             <option>Laporan</option>
             <option>Dokumentasi</option>
           </select>
@@ -210,6 +219,7 @@
 
 <script src="../js/config.js"></script>
 <script src="../js/api.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="../js/export.js"></script>
 
 <script>
@@ -226,7 +236,7 @@ document.getElementById("logout").onclick = async function(e){
   }catch(e){}
 
   if(window.clearSipadSession)window.clearSipadSession();else localStorage.clear();
-  location.replace("/pages/login.html");
+  location.replace("login.html");
 };
 
 // Mobile sidebar toggle
