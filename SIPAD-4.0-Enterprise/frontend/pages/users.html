@@ -7,6 +7,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="../css/style.css" rel="stylesheet">
+  <link href="../css/bootstrap-custom.css" rel="stylesheet">
   <script src="../js/theme.js"></script>
   <script src="../js/auth-guard.js"></script>
   <script>guardSession();</script>
@@ -96,33 +97,28 @@
     <header class="topbar">
 
       <div>
-        <div class="eyebrow">ADMINISTRASI AKSES</div>
-
-        <h1 class="welcome-title">
-          Pengguna
-        </h1>
+        <h1 class="welcome-title">Pengguna</h1>
 
         <p class="subtitle mb-0">
-          Kelola peran, status, dan akses seluruh pengguna SIPAD.
+          Manajemen akses pengguna
         </p>
-      </div>
-
-      <div class="status-pill">
-        <span class="status-dot"></span>
-        Akses Terkontrol
       </div>
 
     </header>
 
-    <section class="content-panel">
+    <section class="stats-grid user-stats-grid">
+      <div class="glass stat-card"><div class="stat-value" id="userTotal">0</div><div class="stat-title">Total Pengguna</div></div>
+      <div class="glass stat-card user-active-stat"><div class="stat-value" id="userActive">0</div><div class="stat-title">Aktif</div></div>
+      <button class="user-add-button" type="button" data-bs-toggle="modal" data-bs-target="#addUserModal">♙ &nbsp;Tambah Pengguna</button>
+    </section>
+
+    <section class="content-panel user-panel">
 
       <div class="toolbar">
 
         <div>
-          <h2 class="panel-title">Daftar Pengguna</h2>
-          <small class="text-muted">
-            Akun yang memiliki akses ke sistem SIPAD.
-          </small>
+          <h2 class="panel-title visually-hidden">Daftar Pengguna</h2>
+          <input id="userSearch" class="form-control user-search" placeholder="⌕  Cari nama atau email...">
         </div>
 
       </div>
@@ -133,60 +129,11 @@
 
           <thead>
             <tr>
-              <th>Pengguna</th>
-              <th width="160">Peran</th>
-              <th width="140">Status</th>
+              <th>Nama</th><th>Email</th><th>Peran</th><th>Status</th><th>Login Terakhir</th><th>Aksi</th>
             </tr>
           </thead>
 
-          <tbody>
-
-            <tr>
-              <td>
-                <strong>admin@kpid.go.id</strong>
-                <small class="d-block text-muted">Administrator Utama</small>
-              </td>
-
-              <td>
-                <span class="role-badge">ADMIN</span>
-              </td>
-
-              <td>
-                <span class="text-success fw-semibold">● Aktif</span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <strong>operator@kpid.go.id</strong>
-                <small class="d-block text-muted">Pengelola Arsip</small>
-              </td>
-
-              <td>
-                <span class="role-badge">OPERATOR</span>
-              </td>
-
-              <td>
-                <span class="text-success fw-semibold">● Aktif</span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <strong>pimpinan@kpid.go.id</strong>
-                <small class="d-block text-muted">Pemantau Laporan</small>
-              </td>
-
-              <td>
-                <span class="role-badge">PIMPINAN</span>
-              </td>
-
-              <td>
-                <span class="text-success fw-semibold">● Aktif</span>
-              </td>
-            </tr>
-
-          </tbody>
+          <tbody id="usersBody"><tr><td colspan="6" class="empty-state">Memuat data...</td></tr></tbody>
 
         </table>
 
@@ -198,11 +145,35 @@
 
 </div>
 
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Tambah Pengguna Baru</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button></div><form id="addUserForm"><div class="modal-body user-form"><label>Nama Lengkap<input id="newUserName" class="form-control" required placeholder="Masukkan nama lengkap"></label><label>Email<input id="newUserEmail" class="form-control" type="email" required placeholder="nama@kpid.go.id"></label><label>Password<input id="newUserPassword" class="form-control" type="password" required minlength="6" placeholder="Masukkan password"></label><label>Peran<select id="newUserRole" class="form-select"><option>Viewer</option><option>Operator</option><option>Admin</option></select></label></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button><button class="user-add-button" type="submit">Tambah Pengguna</button></div></form></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/config.js"></script>
 <script src="../js/api.js"></script>
 
 <script>
-const role = localStorage.getItem("sipad_role") || "ADMIN";
+const usersBody=document.getElementById("usersBody");
+const currentRole = localStorage.getItem("sipad_role") || "GUEST";
+if(currentRole !== "ADMIN") document.querySelectorAll(".user-add-button").forEach(button=>button.hidden=true);
+let userData=[];
+function renderUsers(){
+  const query=document.getElementById("userSearch").value.toLowerCase();
+  const users=userData.filter(user=>`${user.name||""} ${user.email}`.toLowerCase().includes(query));
+  document.getElementById("userTotal").textContent=userData.length;
+  document.getElementById("userActive").textContent=userData.filter(user=>user.active!==false).length;
+  usersBody.innerHTML=users.length?users.map(user=>{const name=user.name||user.email.split("@")[0].replace(/[._-]/g," ");const roleLabel=(user.role||"VIEWER").toLowerCase();const active=user.active!==false;const builtIn=["admin@kpid.go.id","operator@kpid.go.id","pimpinan@kpid.go.id"].includes(user.email);return `<tr><td><span class="user-row-avatar">${name.charAt(0).toUpperCase()}</span><strong>${name}</strong></td><td class="user-email">${user.email}</td><td><span class="role-badge role-${roleLabel}">${user.role||"VIEWER"}</span></td><td><span class="${active?"user-active":"user-inactive"}">● ${active?"Aktif":"Nonaktif"}</span></td><td class="user-last-login">${user.lastLogin||"-"}</td><td><button class="user-toggle-button" type="button" data-email="${user.email}" ${builtIn?"disabled title=\"Akun bawaan\"":""}>${builtIn?"Akun bawaan":active?"Nonaktifkan":"Aktifkan"}</button></td></tr>`}).join(""):"<tr><td colspan=\"6\" class=\"empty-state\">Tidak ada pengguna</td></tr>";
+  usersBody.querySelectorAll(".user-toggle-button").forEach(button=>{if(currentRole !== "ADMIN")button.hidden=true;button.addEventListener("click",async()=>{try{button.disabled=true;await api.toggleUser(button.dataset.email);await loadUsers();}catch(error){notify("Gagal mengubah status",error.message,"error");button.disabled=false;}})});
+}
+async function loadUsers(){
+  try{
+    userData=await api.users();
+    renderUsers();
+  }catch(error){console.error("Gagal memuat pengguna",error);}
+}
+loadUsers();
+document.getElementById("userSearch").addEventListener("input",renderUsers);
+document.getElementById("addUserForm").addEventListener("submit",async event=>{event.preventDefault();const form=event.currentTarget;const button=form.querySelector("button[type=submit]");try{button.disabled=true;await api.createUser({name:document.getElementById("newUserName").value.trim(),email:document.getElementById("newUserEmail").value.trim(),password:document.getElementById("newUserPassword").value,role:document.getElementById("newUserRole").value});bootstrap.Modal.getOrCreateInstance(document.getElementById("addUserModal")).hide();form.reset();await loadUsers();notify("Berhasil","Pengguna berhasil ditambahkan.","success");}catch(error){notify("Gagal menambah pengguna",error.message,"error");}finally{button.disabled=false;}});
+const role = currentRole;
 
 document.getElementById("userRole").textContent = role;
 document.getElementById("userAvatar").textContent = role.charAt(0);
@@ -215,7 +186,7 @@ document.getElementById("logout").onclick = async (e)=>{
   }catch(err){}
 
   if(window.clearSipadSession)window.clearSipadSession();else localStorage.clear();
-  location.replace("/pages/login.html");
+  location.replace("login.html");
 };
 
 // Mobile sidebar toggle
